@@ -1,0 +1,5 @@
+TODO:
+* NPCs be visible with click or etc and spawn NPCs. Use an ID system?
+* Load as a PNG or tiled map.
+* Save state.
+* Dinamic html and json generation for map, settings and npcs.

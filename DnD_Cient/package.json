@@ -1,0 +1,10 @@
+{
+  "name": "Map_Prototype",
+  "version": "0.4.0",
+  "description": "DND map prototype",
+  "dependencies": {
+    "express": "^4.10.2",
+    "phaser": "^2.4.4",
+    "socket.io": "^1.3.7"
+  }
+}

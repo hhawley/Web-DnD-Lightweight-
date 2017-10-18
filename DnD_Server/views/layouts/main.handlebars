@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html>
+<HEAD>
+	<meta charset="UTF-8"/>
+	<title> DnD Online Build 0.1 </title>
+	
+	{{{_sections.head}}}
+	<script type="text/javascript" src="http://code.jquery.com/jquery-2.2.2.min.js"></script>
+	<script type="text/javascript">
+	$(document).ready(function(){
+		// $("#modify").click(function(){
+		// 	var selected = $("#campaing_radio", "input[type='radio']:checked");
+		// 	if(selected.length > 0) {
+		// 		$.post("/ModifyCampaing", { selected: selected.val() });
+		// 	}
+
+		// });
+
+		$('#signout').click(function() {
+			var post = $.post("/SignOut");
+			post.done(function(data) {
+				window.location = data.redirect;
+			});
+		});
+
+		$('#campaingmanager').click(function() {
+			window.location = '/gmtools/campaingmanager';
+		});
+
+		$('#loadresources').click(function() {
+			window.location = 'gmtools/loadresources';
+		})
+	});
+	</script>
+
+		
+	</div>
+	<style>
+	body{
+		font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif; 
+   		font-weight: 300;
+	}
+
+	#leftsidebar {
+		border: solid;
+		width: 200px;
+		float: left;
+		margin-left: 7px;
+		margin-right: 6px;
+		text-align: left;
+	}
+
+	#rightsidebar {
+		border: solid;
+		width: 200px;
+		float: right;
+		margin-left: 7px;
+		margin-right: 6px;
+		text-align: left;
+	}
+
+	#center {
+		width: 800px;
+		float: right;
+		margin: 0 auto;
+		margin-top: 24px;
+		text-align: center;
+	}
+
+	</style>
+</HEAD>
+<body>
+	{{#if userName}}
+	<div id="rightsidebar">
+	<h2>GM settings</h2>
+	<ul>
+		<!-- TODO: Inefficient, use CSS wizardy to change this to a link -->
+		<button id="campaingmanager">Campaing Manager</button>
+		<button id="loadresources">Load Resources</button>
+		<!-- <a href="http://localhost:3000/gmtools/loadresources">Load Resources</a> -->
+	</ul>
+	</div>
+	{{/if}}
+
+	<div id="leftsidebar">
+	<ul>
+		<a href="http://localhost:3000">Home</a></br>
+		{{#if userName}}
+		
+		<a>Hello, {{userName}}</a></br>
+		<a href='#' id='signout'>Sign Out</a></br>
+		
+		{{else}}
+		<a href="http://localhost:3000/register">Register</a></br>
+		<a href="http://localhost:3000/login">Log in</a></br>
+		{{/if}}
+		<a href="http://localhost:3000/play">Join Campaing</a></br>
+	</ul>
+	</div>
+
+	<div id ="center">
+	{{{body}}}
+	</div>
+
+	{{{_sections.jquery}}}
+</body>
+
+</html>

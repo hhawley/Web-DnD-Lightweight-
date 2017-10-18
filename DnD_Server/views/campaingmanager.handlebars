@@ -1,0 +1,161 @@
+{{#section 'head'}}
+<script type="text/javascript" src="/socket.io/socket.io.js"></script>
+<script type="text/javascript" src="//cdn.jsdelivr.net/phaser/2.4.6/phaser.js"></script>
+<script type="text/javascript" src="/scripts/game/Boot.js"></script>
+<script type="text/javascript" src="/scripts/game/Preload.js"></script>
+<script type="text/javascript" src="/scripts/game/Menu.js"></script>
+<script type="text/javascript" src="/scripts/game/PreloadGame.js"></script>
+<script type="text/javascript" src="/scripts/game/Game.js"></script>
+{{/section}}
+
+<h2>Campaing Manager</h2>
+
+<select id="campaing_dropbox">
+{{#each campaingNames}}
+	<option value={{Name}}>{{Name}}</option>
+{{/each}}
+<option value="New Campaing">--New Campaing--</option>
+</select></br>
+
+
+Name: <input id="lName" type="text"></input></br></br>
+
+Maps:
+
+<select id="maps_dropbox">
+<option value="New Map">--New Map--</option>
+</select></br>
+
+<button id="btnModifyMap">Modify Map</button></br></br>
+
+
+<button id="btnSaveCampaing">Save</button>
+<button id="btnStartCampaing">Start</button>
+
+<!-- Game will be loaded here -->
+<script id="mapgame"></script>
+
+{{#section 'jquery'}}
+<script type="text/javascript">
+$(document).ready(function(){
+
+		var maps = [];
+
+		$('#campaing_dropbox').change(function() {
+
+			var current_val = $("#campaing_dropbox option:selected").val();
+
+			if(current_val == 'New Campaing') {
+
+				$('#lName').val("");
+
+			} else {
+
+				var campaings = [];
+
+				$.post('/Campaings').done(function(data) {
+
+
+					data.forEach(function(campaing, i) {
+						
+						if(campaing.Name == current_val) {
+							maps = campaing.Data.maps;
+						}
+
+					});
+
+					if(maps) {
+						htmlStr = "";
+						maps.forEach(function(map, i) {
+							htmlStr += "<option value='" + map.name + "'>" + map.name + "</option>";
+						});
+
+						htmlStr += "<option value='New Map'>--New Map--</option>";
+
+						$("#maps_dropbox").html(htmlStr);
+					} 
+					
+
+				});
+
+				$('#lName').val(current_val);
+
+			}
+
+		});
+
+		$('#btnModifyMap').click(function(){
+			
+			$('#mapgame').attr("src", "/scripts/game/main.js");
+			
+		});
+
+
+		$('#btnSaveCampaing').click(function(){
+			var current_val = $("#campaing_dropbox option:selected").val();
+			var currentName = $('#lName').val();
+
+			if(current_val == 'New Campaing') {
+				
+				var data = "";
+				var post  = $.post("/CreateCampaing", 
+				{
+					campaingName: currentName, 
+					data: JSON.stringify({ 
+						currentMap  : "",
+					 	maps 		: maps 
+					 }) 
+				});
+
+				post.done(function(data) {
+			
+					window.location = data.redirect;
+			
+				}); 
+
+			} else if(current_val == currentName) {
+
+				var data = "";
+				var post  = $.post("/SaveCampaing", 
+				{
+					campaingName: currentName, 
+					data: JSON.stringify({ 
+						currentMap	: "",
+					 	maps 		: maps 
+					 })
+				});
+
+				post.done(function(data) {
+			
+					window.location = data.redirect;
+			
+				}); 
+
+			} else if(current_val != currentName) {
+				var data = "";
+				var post  = $.post("/RenameCampaing", 
+				{
+					campaingName: currentName, 
+					data: JSON.stringify({ 
+						currentMap 	: "",
+					 	maps 		: maps 
+					 })
+				});
+
+				post.done(function(data) {
+			
+					window.location = data.redirect;
+			
+				}); 
+			}
+
+			
+
+		});
+
+		
+	});
+</script>
+
+
+{{/section}}

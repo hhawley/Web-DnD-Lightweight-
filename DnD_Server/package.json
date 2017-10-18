@@ -1,0 +1,21 @@
+{
+  "name": "DnD_webpage",
+  "version": "0.0.1",
+  "description": "To log in and load pictures",
+  "dependencies": {
+    "bcrypt": "^0.8.5",
+    "body-parser": "^1.15.0",
+    "cookie-parser": "^1.4.1",
+    "express": "^4.13.4",
+    "express-mysql-session": "^1.0.0-rc.0",
+    "express-session": "^1.13.0",
+    "express3-handlebars": "^0.5.2",
+    "formidable": "^1.0.17",
+    "fs-extra": "^0.26.7",
+    "jquery": "2.2.2",
+    "mysql": "^2.10.2",
+    "phaser": "^2.4.6",
+    "request": "^2.69.0",
+    "socket.io": "^1.4.5"
+  }
+}

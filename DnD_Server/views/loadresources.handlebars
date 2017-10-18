@@ -1,0 +1,31 @@
+<select id="resource_dropbox">
+	<option value='tiledmap.json'>Tiledmap</option>
+	<option value='token.json'>Token</option>
+	<option value='image'>Image map</option>
+</select>
+	
+
+<form action="/upload" method="POST" enctype="multipart/form-data" id="imagemap-upload">
+	
+	<input type = "file" required accept="image/*" id="pho" name="photo"/>
+
+	<button type="submit" class="btn btn-primary"> Submit </button>
+
+
+</form>
+
+<form action="/upload" method="POST" enctype="multipart/form-data" id="token-upload">
+	<input type = "file" required accept="image/*" id="pho" name="photo"/>
+	<input type = "text" required name = "name"></input>
+	<button type="submit" class="btn btn-primary"> Submit </button>
+</form>
+
+
+{{#section 'jquery'}}
+<script type="text/javascript">
+$(document).ready(function(){
+
+
+}
+</script>
+{{/section}}
